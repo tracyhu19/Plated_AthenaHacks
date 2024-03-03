@@ -2,25 +2,25 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app3.db'  # SQLite database
 db = SQLAlchemy(app)
 
 class User(db.Model):
-    name = db.Column(db.String(80), primary_key=True)
-    street = db.Column(db.String(200), unique=True, nullable=False)
-    city = db.Column(db.String(80), unique=True, nullable=False)
-    state = db.Column(db.String(80), unique=True, nullable=False)
-    zipcode = db.Column(db.Integer, unique=True, nullable=False)
+    fname = db.Column(db.String(80), primary_key=True)
+    street = db.Column(db.String(200), unique=False, nullable=False)
+    city = db.Column(db.String(80), unique=False, nullable=False)
+    state = db.Column(db.String(80), unique=False, nullable=False)
+    zipcode = db.Column(db.Integer, unique=False, nullable=False)
 
-    phone = db.Column(db.Integer, unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    phone = db.Column(db.Integer, unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=False, nullable=False)
 
-    product = db.Column(db.String(120), unique=True, nullable=False)
-    quantity = db.Column(db.Integer, unique=True, nullable=False)
-    exdate = db.Column(db.String(80), unique=True, nullable=False)
-    notes = db.Column(db.String(1000), unique=True, nullable=False)
+    product = db.Column(db.String(120), unique=False, nullable=False)
+    quantity = db.Column(db.Integer, unique=False, nullable=False)
+    exdate = db.Column(db.String(80), unique=False, nullable=False)
+    notes = db.Column(db.String(1000), unique=False, nullable=False)
 
-    need = db.Column(db.String(1000), unique=True, nullable=False)
+    need = db.Column(db.String(1000), unique=False, nullable=False)
 
 # Pass the required route to the decorator. 
 
@@ -51,7 +51,7 @@ print("Apple")
 def submit_form():
     print("Inside route")
 
-    name = request.form['name']
+    fname = request.form['fname']
     street = request.form['street']
     city = request.form['city']
     state = request.form['state']
@@ -66,7 +66,7 @@ def submit_form():
     notes = request.form['notes']
     need = request.form['need']
 
-    new_user = User(name=name, street=street, city=city, state=state, zipcode=zipcode, phone=phone, email=email, product=product, quantity=quantity, exdate=exdate, notes=notes, need=need)
+    new_user = User(fname=fname, street=street, city=city, state=state, zipcode=zipcode, phone=phone, email=email, product=product, quantity=quantity, exdate=exdate, notes=notes, need=need)
 
     db.session.add(new_user)
     db.session.commit()
