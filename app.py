@@ -6,9 +6,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # SQLite database
 db = SQLAlchemy(app)
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), primary_key=True)
+    street = db.Column(db.String(200), unique=True, nullable=False)
+    city = db.Column(db.String(80), unique=True, nullable=False)
+    state = db.Column(db.String(80), unique=True, nullable=False)
+    zipcode = db.Column(db.Integer, unique=True, nullable=False)
+
+    phone = db.Column(db.Integer, unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+
+    product = db.Column(db.String(120), unique=True, nullable=False)
+    quantity = db.Column(db.Integer, unique=True, nullable=False)
+    exdate = db.Column(db.String(80), unique=True, nullable=False)
+    notes = db.Column(db.String(1000), unique=True, nullable=False)
+
+    need = db.Column(db.String(1000), unique=True, nullable=False)
 
 # Pass the required route to the decorator. 
 
@@ -38,11 +50,23 @@ print("Apple")
 @app.route('/submit_form', methods=['POST'])
 def submit_form():
     print("Inside route")
-    username = request.form['username']
-    email = request.form['email']
-    id = request.form['id']
 
-    new_user = User(id=id, username=username, email=email)
+    name = request.form['name']
+    street = request.form['street']
+    city = request.form['city']
+    state = request.form['state']
+    zipcode = request.form['zipcode']
+
+    phone = request.form['phone']
+    email = request.form['email']
+    
+    product = request.form['product']
+    quantity = request.form['quantity']
+    exdate = request.form['exdate']
+    notes = request.form['notes']
+    need = request.form['need']
+
+    new_user = User(name=name, street=street, city=city, state=state, zipcode=zipcode, phone=phone, email=email, product=product, quantity=quantity, exdate=exdate, notes=notes, need=need)
 
     db.session.add(new_user)
     db.session.commit()
